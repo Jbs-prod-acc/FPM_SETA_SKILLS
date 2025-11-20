@@ -1,0 +1,45 @@
+body {
+  background-color: #f8f9fa;
+}
+.page-wrapper {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+h1.page-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+.left-panel-card {
+  height: 100%;
+}
+.chart-container {
+  background: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-bottom: 16px;
+}
+canvas {
+  max-width: 100%;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+.page-header {
+  display: flex;
+  align-items: center; /* vertically center logo & text */
+  justify-content: space-between; /* logo left, title right */
+  width: 100%;
+}
+
+.page-logo {
+  height: 60px; /* adjust as needed */
+  width: auto;
+}
+
+.page-title {
+  margin: 0; /* remove default margin so it aligns nicely */
+}
