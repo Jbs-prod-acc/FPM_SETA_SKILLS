@@ -12,35 +12,41 @@
 
     <!-- Chart.js for mock plots -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/static/js/script.js" defer></script>
+<script src="/static/js/script.js" defer></script>
 
     <style></style>
   </head>
   <body>
-    <div class="page-wrapper">
-      <!-- Title -->
-      <div class="d-flex align-items-center justify-content-between">
-        <h1 class="page-title mb-0">FPM SETA SKILLS FORECASTER</h1>
-        <img src="/static/images/logo.png" alt="FPM SETA Logo" style="height: 60px" />
+    <div class="container-fluid page-wrapper">
+      <!-- Title row -->
+      <div class="row align-items-center mb-3">
+        <div class="col-8 col-md-9">
+          <h1 class="page-title mb-0">FPM SETA SKILLS FORECASTER</h1>
+        </div>
+        <div class="col-4 col-md-3 text-end">
+          <img src="/static/images/logo.png" alt="FPM SETA Logo" class="img-fluid header-logo" />
+        </div>
       </div>
 
       <div class="row g-4">
         <!-- LEFT: dropdown -->
-        <div class="col-md-3">
+        <div class="col-12 col-lg-3">
           <div class="card left-panel-card">
             <div class="card-body">
               <label for="specialization" class="form-label fw-semibold">Select Specialization:</label>
-              <select id="specialization" class="form-select">
-                <option selected>General Manager Public Service</option>
+              <select id="specialization" name="specialization" class="form-select">
+                <option value="" selected disabled>Select specialization</option>
 
-                <option selected>Dynamic looping of OFO Specialization</option>
+                {% for opt in ofo_options %}
+                <option value="{{ opt.value }}">{{ opt.label }}</option>
+                {% endfor %}
               </select>
             </div>
           </div>
         </div>
 
         <!-- RIGHT: tabs + results -->
-        <div class="col-md-9">
+        <div class="col-12 col-lg-9">
           <!-- Tabs -->
           <ul class="nav nav-tabs mb-3" id="forecastTabs" role="tablist">
             <li class="nav-item" role="presentation">
@@ -91,16 +97,16 @@
 
           <!-- Tab content -->
           <div class="tab-content" id="forecastTabsContent">
-            <!-- MANUAL (text) -->
+            <!-- MANUAL -->
             <div class="tab-pane fade show active" id="manual" role="tabpanel" aria-labelledby="manual-tab">
               <div class="card">
                 <div class="card-body">
                   <h4>Manual</h4>
                   <p>
                     The
-                    <strong>Chemical Sector Occupational Outlook</strong>
+                    <strong>Fibre Processing and Manufacturing</strong>
                     tool has been designed to provide a comprehensive examination of occupational trends within the
-                    chemical sector.
+                    Fibre Processing and Manufacturing sector.
                   </p>
                   <h5>Features</h5>
                   <ul>
@@ -133,7 +139,7 @@
                   Time Series for
                   <span id="trend-title"></span>
                 </h6>
-                <canvas id="trendLineChart" height="200"></canvas>
+                <canvas id="trendLineChart"></canvas>
               </div>
               <div class="chart-container">
                 <h6 class="mb-1">
@@ -141,7 +147,7 @@
                   <span id="boxplot-title"></span>
                   (mock representation)
                 </h6>
-                <canvas id="trendBoxChart" height="200"></canvas>
+                <canvas id="trendBoxChart"></canvas>
               </div>
             </div>
 
@@ -152,14 +158,14 @@
                   ACF for
                   <span id="acf-title"></span>
                 </h6>
-                <canvas id="acfChart" height="180"></canvas>
+                <canvas id="acfChart"></canvas>
               </div>
               <div class="chart-container">
                 <h6 class="mb-1">
                   PACF for
                   <span id="pacf-title"></span>
                 </h6>
-                <canvas id="pacfChart" height="180"></canvas>
+                <canvas id="pacfChart"></canvas>
               </div>
             </div>
 
@@ -171,25 +177,25 @@
                   <span id="forecast-title"></span>
                   (mock)
                 </h6>
-                <canvas id="forecastChart" height="200"></canvas>
+                <canvas id="forecastChart"></canvas>
               </div>
 
               <div class="chart-container">
                 <h6 class="mb-1">Residuals from ARIMA(0,0,0) with zero mean (mock)</h6>
-                <canvas id="residualsSeriesChart" height="180"></canvas>
+                <canvas id="residualsSeriesChart"></canvas>
               </div>
 
               <div class="row">
                 <div class="col-md-6">
                   <div class="chart-container">
                     <h6 class="mb-1">ACF of residuals (mock)</h6>
-                    <canvas id="residualsAcfChart" height="180"></canvas>
+                    <canvas id="residualsAcfChart"></canvas>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="chart-container">
                     <h6 class="mb-1">Histogram of residuals (mock)</h6>
-                    <canvas id="residualsHistChart" height="180"></canvas>
+                    <canvas id="residualsHistChart"></canvas>
                   </div>
                 </div>
               </div>
@@ -202,10 +208,13 @@
             </div>
           </div>
         </div>
+        <!-- /col-right -->
       </div>
+      <!-- /row -->
     </div>
+    <!-- /container-fluid -->
 
-    <!-- Bootstrap JS (for tabs) -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
