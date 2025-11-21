@@ -588,17 +588,10 @@ function buildExplanation(section, data, label) {
     }
 
     case "forecast": {
-      const fc = data.forecast || {};
-      const lb = data.lb_test || {};
-
       const f = fc.value;
       const lo = fc.lo_95;
       const hi = fc.hi_95;
       const lastActual = counts.length ? counts[counts.length - 1] : null;
-
-      const pvalue = typeof lb.lb_pvalue === "number" && isFinite(lb.lb_pvalue) ? lb.lb_pvalue : null;
-
-      // --- Text about the forecast itself ---
       let changeText = "";
 
       if (f !== null && f !== undefined && lastActual !== null && isFinite(f) && isFinite(lastActual)) {
@@ -620,74 +613,12 @@ function buildExplanation(section, data, label) {
         changeText = "The model could not produce a fully reliable comparison with recent data.";
       }
 
-      // --- Decide if the forecast is "poor"/risky or unreliable ---
-      let isRiskyTrend = false;
-      let isUnreliableModel = false;
-
-      // Big drop (more than 10% down)
-      if (
-        f !== null &&
-        f !== undefined &&
-        lastActual !== null &&
-        isFinite(f) &&
-        isFinite(lastActual) &&
-        lastActual !== 0
-      ) {
-        const relChange = (f - lastActual) / lastActual;
-        if (relChange < -0.1) {
-          isRiskyTrend = true;
-        }
-      }
-
-      // Very wide confidence interval (more than 60% of forecast magnitude)
-      let intervalWidthRatio = null;
-      if (
-        f !== null &&
-        f !== undefined &&
-        hi !== null &&
-        hi !== undefined &&
-        lo !== null &&
-        lo !== undefined &&
-        isFinite(f) &&
-        isFinite(hi) &&
-        isFinite(lo)
-      ) {
-        const width = Math.abs(hi - lo);
-        intervalWidthRatio = width / Math.max(1, Math.abs(f));
-        if (intervalWidthRatio > 0.6) {
-          isUnreliableModel = true;
-        }
-      }
-
-      // Ljung–Box p-value: if < 0.05, residuals not white noise
-      if (pvalue !== null && isFinite(pvalue) && pvalue < 0.05) {
-        isUnreliableModel = true;
-      }
-
-      // --- Build recommendations text ---
-      let recommendations = "";
-
-      if (isRiskyTrend || isUnreliableModel) {
-        recommendations =
-          "\n\nRecommended actions:\n" +
-          "- Investigate the drivers behind the projected change (e.g. policy shifts, technology, retirements, demand from employers).\n" +
-          "- Engage with employers in this specialization to validate whether the forecast aligns with their expectations on future staffing.\n" +
-          "- Plan targeted upskilling / reskilling or career-pathway programmes where a shortage is anticipated, or redeployment strategies where oversupply is likely.\n" +
-          "- Review the underlying data for completeness and outliers, and consider refining the model (more recent years, alternative specifications) if diagnostics remain weak.";
-      } else {
-        recommendations =
-          "\n\nRecommended actions:\n" +
-          "- Use the forecast interval (lower and upper bounds) to plan for best- and worst-case demand scenarios rather than relying only on the single point forecast.\n" +
-          "- Continue to monitor this specialization and refresh the forecast as new annual data become available.";
-      }
-
       const text =
         `The ARIMA model forecasts that the next period's employment for ${label} will be around ${fmtNumber(
           f
         )} employees. ` +
         `The 95% confidence interval ranges from about ${fmtNumber(lo)} to ${fmtNumber(hi)}. ` +
-        changeText +
-        recommendations;
+        changeText;
 
       return { title: `Forecast for ${label}`, text };
     }

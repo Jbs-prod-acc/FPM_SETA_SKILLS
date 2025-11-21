@@ -6,15 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
     <link href="/static/css/styles.cc" rel="stylesheet" />
 
-    <!-- Chart.js for mock plots -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="/static/js/script.js" defer></script>
-
-    <style></style>
+    <script src="/static/js/script.js" defer></script>
   </head>
   <body>
     <div class="container-fluid page-wrapper">
@@ -24,7 +25,11 @@
           <h1 class="page-title mb-0">FPM SETA SKILLS FORECASTER</h1>
         </div>
         <div class="col-4 col-md-3 text-end">
-          <img src="/static/images/logo.png" alt="FPM SETA Logo" class="img-fluid header-logo" />
+          <img
+            src="/static/images/logo.png"
+            alt="FPM SETA Logo"
+            class="img-fluid header-logo"
+          />
         </div>
       </div>
 
@@ -33,8 +38,16 @@
         <div class="col-12 col-lg-3">
           <div class="card left-panel-card">
             <div class="card-body">
-              <label for="specialization" class="form-label fw-semibold">Select Specialization:</label>
-              <select id="specialization" name="specialization" class="form-select">
+              <label
+                for="specialization"
+                class="form-label fw-semibold"
+                >Select Specialization:</label
+              >
+              <select
+                id="specialization"
+                name="specialization"
+                class="form-select"
+              >
                 <option value="" selected disabled>Select specialization</option>
 
                 {% for opt in ofo_options %}
@@ -56,7 +69,8 @@
                 data-bs-toggle="tab"
                 data-bs-target="#manual"
                 type="button"
-                role="tab">
+                role="tab"
+              >
                 Manual
               </button>
             </li>
@@ -67,7 +81,8 @@
                 data-bs-toggle="tab"
                 data-bs-target="#trend"
                 type="button"
-                role="tab">
+                role="tab"
+              >
                 Trend
               </button>
             </li>
@@ -78,7 +93,8 @@
                 data-bs-toggle="tab"
                 data-bs-target="#correlations"
                 type="button"
-                role="tab">
+                role="tab"
+              >
                 Correlations
               </button>
             </li>
@@ -89,7 +105,8 @@
                 data-bs-toggle="tab"
                 data-bs-target="#forecast"
                 type="button"
-                role="tab">
+                role="tab"
+              >
                 Forecast
               </button>
             </li>
@@ -98,25 +115,33 @@
           <!-- Tab content -->
           <div class="tab-content" id="forecastTabsContent">
             <!-- MANUAL -->
-            <div class="tab-pane fade show active" id="manual" role="tabpanel" aria-labelledby="manual-tab">
+            <div
+              class="tab-pane fade show active"
+              id="manual"
+              role="tabpanel"
+              aria-labelledby="manual-tab"
+            >
               <div class="card">
                 <div class="card-body">
                   <h4>Manual</h4>
                   <p>
                     The
                     <strong>Fibre Processing and Manufacturing</strong>
-                    tool has been designed to provide a comprehensive examination of occupational trends within the
-                    Fibre Processing and Manufacturing sector.
+                    tool has been designed to provide a comprehensive examination
+                    of occupational trends within the Fibre Processing and
+                    Manufacturing sector.
                   </p>
                   <h5>Features</h5>
                   <ul>
                     <li>
                       <strong>Select Specialization:</strong>
-                      Use the dropdown on the left to choose a specific occupational specialization.
+                      Use the dropdown on the left to choose a specific
+                      occupational specialization.
                     </li>
                     <li>
                       <strong>Trend Tab:</strong>
-                      Displays a time-series of the selected specialization’s data across years.
+                      Displays a time-series of the selected specialization’s
+                      data across years.
                     </li>
                     <li>
                       <strong>Correlations Tab:</strong>
@@ -124,8 +149,8 @@
                     </li>
                     <li>
                       <strong>Forecast Tab:</strong>
-                      Presents an ARIMA-style forecast with confidence bands and residual diagnostics (mocked here with
-                      JavaScript charts).
+                      Presents an ARIMA-style forecast with confidence bands and
+                      residual diagnostics.
                     </li>
                   </ul>
                 </div>
@@ -133,68 +158,190 @@
             </div>
 
             <!-- TREND -->
-            <div class="tab-pane fade" id="trend" role="tabpanel" aria-labelledby="trend-tab">
+            <div
+              class="tab-pane fade"
+              id="trend"
+              role="tabpanel"
+              aria-labelledby="trend-tab"
+            >
               <div class="chart-container">
-                <h6 class="mb-1">
-                  Time Series for
-                  <span id="trend-title"></span>
-                </h6>
+                <div
+                  class="d-flex justify-content-between align-items-center mb-1"
+                >
+                  <h6 class="mb-0">
+                    Time Series for
+                    <span id="trend-title"></span>
+                  </h6>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#explanationModal"
+                    data-explain="trend"
+                  >
+                    Explain
+                  </button>
+                </div>
                 <canvas id="trendLineChart"></canvas>
               </div>
+
               <div class="chart-container">
-                <h6 class="mb-1">
-                  Boxplot of Years and Vacancies for
-                  <span id="boxplot-title"></span>
-                  (mock representation)
-                </h6>
+                <div
+                  class="d-flex justify-content-between align-items-center mb-1"
+                >
+                  <h6 class="mb-0">
+                    Boxplot of Years and Vacancies for
+                    <span id="boxplot-title"></span>
+                    (mock representation)
+                  </h6>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#explanationModal"
+                    data-explain="box"
+                  >
+                    Explain
+                  </button>
+                </div>
                 <canvas id="trendBoxChart"></canvas>
               </div>
             </div>
 
             <!-- CORRELATIONS -->
-            <div class="tab-pane fade" id="correlations" role="tabpanel" aria-labelledby="correlations-tab">
+            <div
+              class="tab-pane fade"
+              id="correlations"
+              role="tabpanel"
+              aria-labelledby="correlations-tab"
+            >
               <div class="chart-container">
-                <h6 class="mb-1">
-                  ACF for
-                  <span id="acf-title"></span>
-                </h6>
+                <div
+                  class="d-flex justify-content-between align-items-center mb-1"
+                >
+                  <h6 class="mb-0">
+                    ACF for
+                    <span id="acf-title"></span>
+                  </h6>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#explanationModal"
+                    data-explain="acf"
+                  >
+                    Explain
+                  </button>
+                </div>
                 <canvas id="acfChart"></canvas>
               </div>
+
               <div class="chart-container">
-                <h6 class="mb-1">
-                  PACF for
-                  <span id="pacf-title"></span>
-                </h6>
+                <div
+                  class="d-flex justify-content-between align-items-center mb-1"
+                >
+                  <h6 class="mb-0">
+                    PACF for
+                    <span id="pacf-title"></span>
+                  </h6>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#explanationModal"
+                    data-explain="pacf"
+                  >
+                    Explain
+                  </button>
+                </div>
                 <canvas id="pacfChart"></canvas>
               </div>
             </div>
 
             <!-- FORECAST -->
-            <div class="tab-pane fade" id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
+            <div
+              class="tab-pane fade"
+              id="forecast"
+              role="tabpanel"
+              aria-labelledby="forecast-tab"
+            >
               <div class="chart-container">
-                <h6 class="mb-1">
-                  ARIMA Forecast for
-                  <span id="forecast-title"></span>
-                  (mock)
-                </h6>
+                <div
+                  class="d-flex justify-content-between align-items-center mb-1"
+                >
+                  <h6 class="mb-0">
+                    ARIMA Forecast for
+                    <span id="forecast-title"></span>
+                  </h6>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#explanationModal"
+                    data-explain="forecast"
+                  >
+                    Explain
+                  </button>
+                </div>
                 <canvas id="forecastChart"></canvas>
               </div>
 
               <div class="chart-container">
-                <h6 class="mb-1">Residuals from ARIMA(0,0,0) with zero mean (mock)</h6>
+                <div
+                  class="d-flex justify-content-between align-items-center mb-1"
+                >
+                  <h6 class="mb-0">
+                    Residuals from ARIMA model
+                  </h6>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#explanationModal"
+                    data-explain="residual-series"
+                  >
+                    Explain
+                  </button>
+                </div>
                 <canvas id="residualsSeriesChart"></canvas>
               </div>
 
               <div class="row">
                 <div class="col-md-6">
                   <div class="chart-container">
-                    <h6 class="mb-1">ACF of residuals (mock)</h6>
+                    <div
+                      class="d-flex justify-content-between align-items-center mb-1"
+                    >
+                      <h6 class="mb-0">ACF of residuals</h6>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#explanationModal"
+                        data-explain="residual-acf"
+                      >
+                        Explain
+                      </button>
+                    </div>
                     <canvas id="residualsAcfChart"></canvas>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="chart-container">
-                    <h6 class="mb-1">Histogram of residuals (mock)</h6>
+                    <div
+                      class="d-flex justify-content-between align-items-center mb-1"
+                    >
+                      <h6 class="mb-0">Histogram of residuals</h6>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#explanationModal"
+                        data-explain="residual-hist"
+                      >
+                        Explain
+                      </button>
+                    </div>
                     <canvas id="residualsHistChart"></canvas>
                   </div>
                 </div>
@@ -213,6 +360,34 @@
       <!-- /row -->
     </div>
     <!-- /container-fluid -->
+
+    <!-- Explanation Modal -->
+    <div
+      class="modal fade"
+      id="explanationModal"
+      tabindex="-1"
+      aria-labelledby="explanationModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="explanationModalLabel">
+              Explanation
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p id="explanationModalBody" class="mb-0"></p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
